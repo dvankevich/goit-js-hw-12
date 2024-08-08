@@ -63,13 +63,17 @@ body {
 }
 
 .gallery {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   width: 1128px;
   margin: 0 auto;
+  gap: 24px;
 }
 
 .gallery-item {
   height: 200px;
-  width: 360px;
+  width: calc((100% - 48px) / 3 - 2px);
   border: 1px solid #808080;
 }
 
