@@ -1,4 +1,13 @@
+import SimpleLightbox from 'simplelightbox';
+// Додатковий імпорт стилів
+import 'simplelightbox/dist/simple-lightbox.min.css';
+
 const myGallery = document.querySelector('.gallery');
+const simpleLightBox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+  overlayOpacity: 0.8,
+});
 
 const itemMarkdown = `    <li class="gallery-item">
       <a href="https://pixabay.com/get/gf64bcba6d887d2c3b6bc019500819bd1cbb1d6722145784ce67b367a2a4bb6592136f3862fa13eb0c54d115ffde01998603e8bd3cdaae73cc9c5ce79485e7e38_1280.jpg" class="galery-item-image-link">
@@ -47,3 +56,4 @@ export function drawGallery(gallery, markdown) {
 drawGallery(myGallery, '');
 
 drawGallery(myGallery, galleryMarkdown);
+simpleLightBox.refresh();
