@@ -10,6 +10,10 @@ a {
   color: inherit;
 }
 
+p {
+  margin: 0;
+}
+
 body {
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
@@ -20,7 +24,7 @@ body {
 }
 
 .search-form {
-  margin: 36px auto 0 auto;
+  margin: 36px auto 32px auto;
   width: 400px;
 }
 
@@ -57,3 +61,56 @@ body {
 .search-button:hover {
   background-color: #6c8cff;
 }
+
+.gallery {
+  width: 1128px;
+  margin: 0 auto;
+}
+
+.gallery-item {
+  height: 200px;
+  width: 360px;
+  border: 1px solid #808080;
+}
+
+.galery-item-image-link {
+  display: flex;
+  height: 76%
+}
+
+.galery-item-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-info {
+  display: flex;
+  justify-content: space-around;
+  padding: 4px 0;
+  height: 24%;
+}
+
+.image-info-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.info-item-caption {
+  display: flex;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.33;
+}
+
+.info-item-value {
+  display: flex;
+  font-size: 12px;
+  line-height: 2;
+}
+
+
+
+.
