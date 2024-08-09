@@ -1,17 +1,3 @@
-import SimpleLightbox from 'simplelightbox';
-// Додатковий імпорт стилів
-import 'simplelightbox/dist/simple-lightbox.min.css';
-import { getImages } from './pixabay-api';
-
-const myGallery = document.querySelector('.gallery');
-// const simpleLightBox = new SimpleLightbox('.gallery a', {
-//   captionsData: 'alt',
-//   captionDelay: 500,
-//   overlayOpacity: 0.8,
-// });
-
-const images = getImages().hits;
-
 function getItemMarkdown(item) {
   // webformatURL — посилання на маленьке зображення для списку карток у галереї
   // largeImageURL — посилання на велике зображення для модального вікна
@@ -51,27 +37,10 @@ function getItemMarkdown(item) {
 `;
 }
 
-console.log(getItemMarkdown(images[0]));
-
-let galleryMarkdown = '';
-
-function getGalleryMarkdown(images) {
+export function getGalleryMarkdown(images) {
   return images.map(getItemMarkdown).join('');
 }
-
-galleryMarkdown = getGalleryMarkdown(images);
 
 export function drawGallery(gallery, markdown) {
   gallery.innerHTML = markdown;
 }
-
-drawGallery(myGallery, '');
-
-drawGallery(myGallery, galleryMarkdown);
-console.log(document.querySelectorAll('.gallery a'));
-//simpleLightBox.refresh();
-new SimpleLightbox('.gallery a', {
-  captionsData: 'alt',
-  captionDelay: 250,
-  overlayOpacity: 0.8,
-});
