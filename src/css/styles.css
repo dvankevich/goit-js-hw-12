@@ -27,7 +27,7 @@ body {
   display: block;
   text-align: center;
   width: 100%;
-  animation: blinker 1s linear infinite;
+  animation: blinker 1.25s linear infinite;
 }
 
 @keyframes blinker {
