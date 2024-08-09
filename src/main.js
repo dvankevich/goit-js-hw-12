@@ -11,32 +11,40 @@ const searchButton = document.querySelector('.search-button');
 const searchInput = document.querySelector('.search-input');
 
 searchButton.addEventListener('click', function (event) {
+  event.preventDefault();
   let searchTerm = String(searchInput.value.trim());
   searchTerm = searchTerm.replace(/[*]/g, ''); // видалення спецсимволів
-  event.preventDefault();
-  console.log(searchTerm.length);
+  let galleryMarkdown = '';
+  let images = '';
+  // console.log(searchTerm.length);
 
   if (!searchTerm || searchTerm.length < 3) {
     console.log('Enter data for search, please. Min. 3 symbols.');
+    searchInput.value = ''; // clear input
+    drawGallery(myGallery, ''); // clear gallery
     return;
   }
 
   console.log(`fetch data from backend with search term: ${searchTerm}`);
   drawGallery(myGallery, loadMessageMarkdown);
-});
 
-let galleryMarkdown = '';
-let images = getImages().hits;
+  images = getImages(searchTerm);
+  // console.log(images);
 
-//drawGallery(myGallery, loadMessageMarkdown);
-
-galleryMarkdown = getGalleryMarkdown(images);
-//drawGallery(myGallery, galleryMarkdown);
-//drawGallery(myGallery, 'Loading images, please wait...');
-
-//console.log(document.querySelectorAll('.gallery a'));
-new SimpleLightbox('.gallery a', {
-  captionsData: 'alt',
-  captionDelay: 250,
-  overlayOpacity: 0.8,
+  if (!images) {
+    console.log(
+      'Sorry, there are no images matching your search query. Please, try again!'
+    );
+    searchInput.value = ''; // clear input
+    drawGallery(myGallery, ''); // clear gallery
+  } else {
+    searchInput.value = ''; // clear input
+    galleryMarkdown = getGalleryMarkdown(images.hits);
+    drawGallery(myGallery, galleryMarkdown);
+    new SimpleLightbox('.gallery a', {
+      captionsData: 'alt',
+      captionDelay: 250,
+      overlayOpacity: 0.8,
+    });
+  }
 });
