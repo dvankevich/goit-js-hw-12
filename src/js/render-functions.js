@@ -37,10 +37,20 @@ function getItemMarkdown(item) {
 `;
 }
 
+/**
+ *
+ * @param {Array} images array
+ * @returns HTML markdown for gallery
+ */
 export function getGalleryMarkdown(images) {
   return images.map(getItemMarkdown).join('');
 }
 
+/**
+ *
+ * @param {Object} gallery gallery DOM object
+ * @param {String} markdown HTML markdown for gallery
+ */
 export function drawGallery(gallery, markdown) {
   gallery.innerHTML = markdown;
 }
