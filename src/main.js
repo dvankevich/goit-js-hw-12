@@ -6,15 +6,16 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const myGallery = document.querySelector('.gallery');
 
-drawGallery(myGallery, '');
+//drawGallery(myGallery, '');
 
 let galleryMarkdown = '';
 let images = getImages().hits;
 
 galleryMarkdown = getGalleryMarkdown(images);
-drawGallery(myGallery, galleryMarkdown);
+//drawGallery(myGallery, galleryMarkdown);
+//drawGallery(myGallery, 'Loading images, please wait...');
 
-console.log(document.querySelectorAll('.gallery a'));
+//console.log(document.querySelectorAll('.gallery a'));
 new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: 250,

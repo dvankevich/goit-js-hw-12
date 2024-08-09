@@ -23,6 +23,19 @@ body {
   color: #2e2f42;
 }
 
+.load-message {
+  display: block;
+  text-align: center;
+  width: 100%;
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
 .search-form {
   margin: 36px auto 32px auto;
   width: 400px;
