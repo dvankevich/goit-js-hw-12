@@ -1,3 +1,3 @@
 import { getImages } from './js/pixabay-api';
 
-console.log(getImages());
+//console.log(getImages().hits);
