@@ -68,27 +68,27 @@ function searchButtonHandler(event) {
   console.log(`fetch data from backend with search term: ${searchTerm}`);
   drawGallery(myGallery, loadMessageMarkdown);
 
-  // emulate network delay
-  setTimeout(() => {
-    images = getImages(searchTerm);
-    //console.log(images.hits);
+  images = getImages(searchTerm);
+  //console.log(images.hits);
 
-    if (images.hits.length === 0) {
-      iziToast.error({
-        ...iziError,
-        message:
-          'Sorry, there are no images matching<br> your search query. Please, try again!',
-      });
-      // console.log(
-      //   'Sorry, there are no images matching your search query. Please, try again!'
-      // );
-      searchInput.value = ''; // clear input
-      drawGallery(myGallery, ''); // clear gallery
-    } else {
-      searchInput.value = ''; // clear input
-      galleryMarkdown = getGalleryMarkdown(images.hits);
-      drawGallery(myGallery, galleryMarkdown);
-      simpleLightBox.refresh();
-    }
-  }, 2000);
+  if (images.hits.length === 0) {
+    iziToast.error({
+      ...iziError,
+      message:
+        'Sorry, there are no images matching<br> your search query. Please, try again!',
+    });
+    // console.log(
+    //   'Sorry, there are no images matching your search query. Please, try again!'
+    // );
+    searchInput.value = ''; // clear input
+    drawGallery(myGallery, ''); // clear gallery
+  } else {
+    searchInput.value = ''; // clear input
+
+    // --------------
+    galleryMarkdown = getGalleryMarkdown(images.hits);
+
+    drawGallery(myGallery, galleryMarkdown);
+    simpleLightBox.refresh();
+  }
 }
