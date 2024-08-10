@@ -29,9 +29,9 @@ searchButton.addEventListener('click', function (event) {
   drawGallery(myGallery, loadMessageMarkdown);
 
   images = getImages(searchTerm);
-  // console.log(images);
+  //console.log(images.hits);
 
-  if (!images) {
+  if (images.hits.length === 0) {
     console.log(
       'Sorry, there are no images matching your search query. Please, try again!'
     );

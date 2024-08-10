@@ -1,4 +1,5 @@
 import response from '../testdata/cats.json';
+import empty from '../testdata/empty.json';
 
 /**
  *
@@ -8,7 +9,7 @@ import response from '../testdata/cats.json';
 export function getImages(searchTerm) {
   //sleep(3000);
   if (searchTerm === 'test') {
-    return '';
+    return empty;
   }
   return response;
 }
