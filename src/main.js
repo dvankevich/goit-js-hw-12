@@ -1,4 +1,5 @@
 import { getImages } from './js/pixabay-api';
+import { getImagesTest } from './js/pixabay-api';
 import { getGalleryMarkdown, drawGallery } from './js/render-functions';
 import SimpleLightbox from 'simplelightbox';
 // Додатковий імпорт стилів
@@ -69,26 +70,38 @@ function searchButtonHandler(event) {
   drawGallery(myGallery, loadMessageMarkdown);
 
   // -----
-  images = getImages(searchTerm);
+  //images = getImages(searchTerm);
   //console.log(images.hits);
+  //
+  getImagesTest(searchTerm)
+    .then(images => {
+      if (images.hits.length === 0) {
+        iziToast.error({
+          ...iziError,
+          message:
+            'Sorry, there are no images matching<br> your search query. Please, try again!',
+        });
+        // console.log(
+        //   'Sorry, there are no images matching your search query. Please, try again!'
+        // );
+        searchInput.value = ''; // clear input
+        drawGallery(myGallery, ''); // clear gallery
+      } else {
+        searchInput.value = ''; // clear input
 
-  if (images.hits.length === 0) {
-    iziToast.error({
-      ...iziError,
-      message:
-        'Sorry, there are no images matching<br> your search query. Please, try again!',
+        galleryMarkdown = getGalleryMarkdown(images.hits);
+
+        drawGallery(myGallery, galleryMarkdown);
+        simpleLightBox.refresh();
+      }
+    })
+    .catch(error => {
+      console.error('сталося щось дивне', error);
     });
-    // console.log(
-    //   'Sorry, there are no images matching your search query. Please, try again!'
-    // );
-    searchInput.value = ''; // clear input
-    drawGallery(myGallery, ''); // clear gallery
-  } else {
-    searchInput.value = ''; // clear input
-
-    galleryMarkdown = getGalleryMarkdown(images.hits);
-
-    drawGallery(myGallery, galleryMarkdown);
-    simpleLightBox.refresh();
-  }
 }
+
+// обробка інших помилок
+window.onerror = (message, source, lineno, colno, error) => {
+  // Обробляємо всі необроблені помилки
+  console.error('Unhandled error:', error);
+};
