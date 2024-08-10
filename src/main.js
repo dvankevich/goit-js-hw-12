@@ -38,6 +38,11 @@ const loadMessageMarkdown =
 const myGallery = document.querySelector('.gallery');
 const searchButton = document.querySelector('.search-button');
 const searchInput = document.querySelector('.search-input');
+const simpleLightBox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+  overlayOpacity: 0.8,
+});
 
 searchButton.addEventListener('click', function (event) {
   event.preventDefault();
@@ -79,10 +84,6 @@ searchButton.addEventListener('click', function (event) {
     searchInput.value = ''; // clear input
     galleryMarkdown = getGalleryMarkdown(images.hits);
     drawGallery(myGallery, galleryMarkdown);
-    new SimpleLightbox('.gallery a', {
-      captionsData: 'alt',
-      captionDelay: 250,
-      overlayOpacity: 0.8,
-    });
+    simpleLightBox.refresh();
   }
 });
