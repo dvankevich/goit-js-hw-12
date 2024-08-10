@@ -3,6 +3,35 @@ import { getGalleryMarkdown, drawGallery } from './js/render-functions';
 import SimpleLightbox from 'simplelightbox';
 // Додатковий імпорт стилів
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import iziToast from 'izitoast';
+// Додатковий імпорт стилів
+import 'izitoast/dist/css/iziToast.min.css';
+
+const iziCommon = {
+  message: 'Common message',
+  theme: 'dark',
+  position: 'topRight',
+  titleColor: '#fff',
+  titleSize: '16px',
+  titleLineHeight: '1.5',
+  messageColor: '#fff',
+  messageSize: '16px',
+  messageLineHeight: '1.5',
+  imageWidth: 24,
+};
+
+const iziError = {
+  ...iziCommon,
+  color: '#ef4040',
+  iconUrl: 'error-icon.svg', // зображення має бути у папці public
+};
+
+const iziWarning = {
+  ...iziCommon,
+  title: 'Warning',
+  color: '#ffa000',
+  iconUrl: 'caution-icon.svg',
+};
 
 const loadMessageMarkdown =
   '<li class="load-message">Loading images, please wait...</li>';
@@ -19,7 +48,11 @@ searchButton.addEventListener('click', function (event) {
   // console.log(searchTerm.length);
 
   if (!searchTerm || searchTerm.length < 3) {
-    console.log('Enter data for search, please. Min. 3 symbols.');
+    iziToast.warning({
+      ...iziWarning,
+      message: 'Enter data for search, please. Min. 3 symbols.',
+    });
+    // console.log('Enter data for search, please. Min. 3 symbols.');
     searchInput.value = ''; // clear input
     drawGallery(myGallery, ''); // clear gallery
     return;
@@ -32,9 +65,14 @@ searchButton.addEventListener('click', function (event) {
   //console.log(images.hits);
 
   if (images.hits.length === 0) {
-    console.log(
-      'Sorry, there are no images matching your search query. Please, try again!'
-    );
+    iziToast.error({
+      ...iziError,
+      message:
+        'Sorry, there are no images matching<br> your search query. Please, try again!',
+    });
+    // console.log(
+    //   'Sorry, there are no images matching your search query. Please, try again!'
+    // );
     searchInput.value = ''; // clear input
     drawGallery(myGallery, ''); // clear gallery
   } else {

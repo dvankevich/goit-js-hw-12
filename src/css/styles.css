@@ -127,3 +127,9 @@ body {
   font-size: 12px;
   line-height: 2;
 }
+
+.iziToast>.iziToast-close {
+  background: url(/izi-close.svg) !important;
+  background-repeat: no-repeat !important;
+  background-position: 50% 50% !important;
+}
