@@ -44,7 +44,9 @@ const simpleLightBox = new SimpleLightbox('.gallery a', {
   overlayOpacity: 0.8,
 });
 
-searchButton.addEventListener('click', function (event) {
+searchButton.addEventListener('click', searchButtonHandler);
+
+function searchButtonHandler(event) {
   event.preventDefault();
   let searchTerm = String(searchInput.value.trim());
   searchTerm = searchTerm.replace(/[*]/g, ''); // видалення спецсимволів
@@ -89,4 +91,4 @@ searchButton.addEventListener('click', function (event) {
       simpleLightBox.refresh();
     }
   }, 2000);
-});
+}
