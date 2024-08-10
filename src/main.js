@@ -68,6 +68,7 @@ function searchButtonHandler(event) {
   console.log(`fetch data from backend with search term: ${searchTerm}`);
   drawGallery(myGallery, loadMessageMarkdown);
 
+  // -----
   images = getImages(searchTerm);
   //console.log(images.hits);
 
@@ -85,7 +86,6 @@ function searchButtonHandler(event) {
   } else {
     searchInput.value = ''; // clear input
 
-    // --------------
     galleryMarkdown = getGalleryMarkdown(images.hits);
 
     drawGallery(myGallery, galleryMarkdown);
