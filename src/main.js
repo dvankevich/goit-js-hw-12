@@ -73,7 +73,9 @@ function searchButtonHandler(event) {
   //images = getImages(searchTerm);
   //console.log(images.hits);
   //
-  getImagesTest(searchTerm)
+  //console.log(getImages(searchTerm));
+
+  getImages(searchTerm)
     .then(images => {
       if (images.hits.length === 0) {
         iziToast.error({
