@@ -50,7 +50,18 @@ export function getGalleryMarkdown(images) {
  *
  * @param {Object} gallery gallery DOM object
  * @param {String} markdown HTML markdown for gallery
+ * @param {String} mode:
+ * full - replace with InnerHTML
+ * beforebegin, afterbegin, beforeend, afterend - insert with insertAdjacentHTML
  */
-export function drawGallery(gallery, markdown) {
-  gallery.innerHTML = markdown;
+export function drawGallery(gallery, markdown, mode = 'full') {
+  switch (mode) {
+    case 'full':
+      gallery.innerHTML = markdown;
+      break;
+
+    default:
+      gallery.insertAdjacentHTML(mode, markdown);
+      break;
+  }
 }

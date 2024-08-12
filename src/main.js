@@ -83,6 +83,7 @@ function searchButtonHandler(event) {
 
         drawGallery(myGallery, galleryMarkdown);
         simpleLightBox.refresh();
+        // drawGallery(myGallery, loadMessageMarkdown, 'afterend'); // for test
       }
     })
     .catch(error => {
