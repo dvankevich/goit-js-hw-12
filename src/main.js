@@ -1,5 +1,4 @@
 import { getImages } from './js/pixabay-api';
-import { getImagesTest } from './js/pixabay-api';
 import { getGalleryMarkdown, drawGallery } from './js/render-functions';
 import SimpleLightbox from 'simplelightbox';
 // Додатковий імпорт стилів
@@ -53,27 +52,19 @@ function searchButtonHandler(event) {
   searchTerm = searchTerm.replace(/[*]/g, ''); // видалення спецсимволів
   let galleryMarkdown = '';
   let images = '';
-  // console.log(searchTerm.length);
 
   if (!searchTerm || searchTerm.length < 3) {
     iziToast.warning({
       ...iziWarning,
       message: 'Enter data for search, please. Min. 3 symbols.',
     });
-    // console.log('Enter data for search, please. Min. 3 symbols.');
     searchInput.value = ''; // clear input
     drawGallery(myGallery, ''); // clear gallery
     return;
   }
 
-  console.log(`fetch data from backend with search term: ${searchTerm}`);
+  //console.log(`fetch data from backend with search term: ${searchTerm}`);
   drawGallery(myGallery, loadMessageMarkdown);
-
-  // -----
-  //images = getImages(searchTerm);
-  //console.log(images.hits);
-  //
-  //console.log(getImages(searchTerm));
 
   getImages(searchTerm)
     .then(images => {
@@ -83,9 +74,6 @@ function searchButtonHandler(event) {
           message:
             'Sorry, there are no images matching<br> your search query. Please, try again!',
         });
-        // console.log(
-        //   'Sorry, there are no images matching your search query. Please, try again!'
-        // );
         searchInput.value = ''; // clear input
         drawGallery(myGallery, ''); // clear gallery
       } else {
