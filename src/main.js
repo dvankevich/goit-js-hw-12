@@ -87,6 +87,7 @@ function searchButtonHandler(event) {
         galleryMarkdown = getGalleryMarkdown(images.hits);
 
         drawGallery(myGallery, galleryMarkdown);
+
         simpleLightBox.refresh();
         // drawGallery(myGallery, loadMessageMarkdown, 'afterend'); // for test
       }
