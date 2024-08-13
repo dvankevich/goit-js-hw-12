@@ -1,4 +1,4 @@
-import { getImages, getImagesAxios } from './js/pixabay-api';
+import { getImagesAxios } from './js/pixabay-api';
 import {
   getGalleryMarkdown,
   drawGallery,
@@ -49,6 +49,8 @@ const simpleLightBox = new SimpleLightbox('.gallery a', {
   overlayOpacity: 0.8,
 });
 
+let page = 1;
+
 searchButton.addEventListener('click', searchButtonHandler);
 
 function searchButtonHandler(event) {
@@ -71,34 +73,27 @@ function searchButtonHandler(event) {
   //console.log(`fetch data from backend with search term: ${searchTerm}`);
   drawGallery(myGallery, loadMessageMarkdown);
 
-  // getImages(searchTerm)
-  //   .then(images => {
-  //     if (images.hits.length === 0) {
-  //       iziToast.error({
-  //         ...iziError,
-  //         message:
-  //           'Sorry, there are no images matching<br> your search query. Please, try again!',
-  //       });
-  //       searchInput.value = ''; // clear input
-  //       drawGallery(myGallery, ''); // clear gallery
-  //     } else {
-  //       searchInput.value = ''; // clear input
-
-  //       galleryMarkdown = getGalleryMarkdown(images.hits);
-
-  //       drawGallery(myGallery, galleryMarkdown);
-
-  //       simpleLightBox.refresh();
-  //       // drawGallery(myGallery, loadMessageMarkdown, 'afterend'); // for test
-  //     }
-  //   })
-  //   .catch(error => {
-  //     console.error('сталося щось дивне', error);
-  //   });
-
-  getImagesAxios(searchTerm)
+  getImagesAxios(searchTerm, page)
     .then(images => {
       console.log(images);
+      if (images.hits.length === 0) {
+        iziToast.error({
+          ...iziError,
+          message:
+            'Sorry, there are no images matching<br> your search query. Please, try again!',
+        });
+        searchInput.value = ''; // clear input
+        drawGallery(myGallery, ''); // clear gallery
+      } else {
+        searchInput.value = ''; // clear input
+
+        galleryMarkdown = getGalleryMarkdown(images.hits);
+
+        drawGallery(myGallery, galleryMarkdown);
+
+        simpleLightBox.refresh();
+        // drawGallery(myGallery, loadMessageMarkdown, 'afterend'); // for test
+      }
     })
     .catch(error => {
       console.error('сталося щось дивне', error);
