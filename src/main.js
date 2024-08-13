@@ -48,8 +48,11 @@ const simpleLightBox = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
   overlayOpacity: 0.8,
 });
+const loadMoreButton = document.querySelector('.load-more-button');
+const secondaryLoadMessage = document.querySelector('.secondary-load-message');
 
 let page = 1;
+let searchTermGlobal = '';
 
 searchButton.addEventListener('click', searchButtonHandler);
 
@@ -73,6 +76,9 @@ function searchButtonHandler(event) {
   //console.log(`fetch data from backend with search term: ${searchTerm}`);
   drawGallery(myGallery, loadMessageMarkdown);
 
+  searchTermGlobal = searchTerm; // save searchTerm in global variable;
+  page = 1;
+
   getImagesAxios(searchTerm, page)
     .then(images => {
       console.log(images);
@@ -93,11 +99,48 @@ function searchButtonHandler(event) {
 
         simpleLightBox.refresh();
         // drawGallery(myGallery, loadMessageMarkdown, 'afterend'); // for test
+        showHtmlObject(loadMoreButton);
       }
     })
     .catch(error => {
       console.error('сталося щось дивне', error);
     });
+}
+
+loadMoreButton.addEventListener('click', loadMoreButtonHandler);
+
+function loadMoreButtonHandler(event) {
+  event.preventDefault();
+  page += 1;
+  let galleryMarkdown = '';
+  let images = '';
+  showHtmlObject(secondaryLoadMessage);
+  hideHtmlObject(loadMoreButton);
+
+  getImagesAxios(searchTermGlobal, page) // використовуємо глобальний searchTerm
+    .then(images => {
+      console.log(images);
+      if (images.hits.length === 0) {
+        // тут вже не перша сторінка і якщо результат пошуку пустий то більше зображень нема
+        iziToast.error({
+          ...iziError,
+          message:
+            "We're sorry, but you've reached<br>the end of search results.",
+        });
+      } else {
+        galleryMarkdown = getGalleryMarkdown(images.hits);
+
+        drawGallery(myGallery, galleryMarkdown, 'beforeend'); // додаємо зображення на екран
+
+        simpleLightBox.refresh();
+        // drawGallery(myGallery, loadMessageMarkdown, 'afterend'); // for test
+        showHtmlObject(loadMoreButton);
+      }
+    })
+    .catch(error => {
+      console.error('сталося щось дивне', error);
+    });
+  hideHtmlObject(secondaryLoadMessage);
 }
 
 // обробка інших помилок

@@ -1,5 +1,7 @@
 [<-- back to README.md](../README.md)
 
+[https://poe.com/s/BgCVHNLTmH033jnhSqpQ](https://poe.com/s/BgCVHNLTmH033jnhSqpQ)
+
 Для звернення до Pixabay API за допомогою бібліотеки Axios у JavaScript, можна
 використати наступний код:
 

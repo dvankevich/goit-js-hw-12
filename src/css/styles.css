@@ -49,6 +49,13 @@ body {
   animation: blinker 1.25s linear infinite;
 }
 
+.secondary-load-message {
+  display: block;
+  text-align: center;
+  width: 100%;
+  animation: blinker 1.25s linear infinite;
+}
+
 @keyframes blinker {
   50% {
     opacity: 0;

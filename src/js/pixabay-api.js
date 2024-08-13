@@ -20,7 +20,7 @@ export async function getImagesAxios(searchTerm, page = 1) {
         page: page,
       },
     });
-    //console.log(response);
+    console.log(response);
 
     return response.data;
   } catch (error) {
