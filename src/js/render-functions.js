@@ -65,3 +65,19 @@ export function drawGallery(gallery, markdown, mode = 'full') {
       break;
   }
 }
+
+/**
+ * add class visually-hidden to Object
+ * @param {Object} htmlObject DOM Object to show
+ */
+export function showHtmlObject(htmlObject) {
+  htmlObject.classList.remove('visually-hidden');
+}
+
+/**
+ * remove class visually-hidden to Object
+ * @param {Object} htmlObject DOM Object to hide
+ */
+export function hideHtmlObject(htmlObject) {
+  htmlObject.classList.add('visually-hidden');
+}

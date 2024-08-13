@@ -1,5 +1,10 @@
 import { getImages } from './js/pixabay-api';
-import { getGalleryMarkdown, drawGallery } from './js/render-functions';
+import {
+  getGalleryMarkdown,
+  drawGallery,
+  showHtmlObject,
+  hideHtmlObject,
+} from './js/render-functions';
 import SimpleLightbox from 'simplelightbox';
 // Додатковий імпорт стилів
 import 'simplelightbox/dist/simple-lightbox.min.css';
