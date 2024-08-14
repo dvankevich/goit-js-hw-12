@@ -81,7 +81,7 @@ function searchButtonHandler(event) {
 
   getImagesAxios(searchTerm, page)
     .then(images => {
-      console.log(images);
+      //console.log(images);
       if (images.hits.length === 0) {
         iziToast.error({
           ...iziError,
@@ -119,7 +119,7 @@ function loadMoreButtonHandler(event) {
 
   getImagesAxios(searchTermGlobal, page) // використовуємо глобальний searchTerm
     .then(images => {
-      console.log(images);
+      // console.log(images);
       if (images.hits.length === 0) {
         // тут вже не перша сторінка і якщо результат пошуку пустий то більше зображень нема
         iziToast.error({
@@ -133,7 +133,17 @@ function loadMoreButtonHandler(event) {
         drawGallery(myGallery, galleryMarkdown, 'beforeend'); // додаємо зображення на екран
 
         simpleLightBox.refresh();
-        // drawGallery(myGallery, loadMessageMarkdown, 'afterend'); // for test
+
+        // scroll
+        const galleryItem = document.querySelector('.gallery-item');
+        //console.log(galleryItem.getBoundingClientRect().height);
+        //window.scrollBy(0, galleryItem.getBoundingClientRect().height * 2);
+        window.scrollBy({
+          top: galleryItem.getBoundingClientRect().height * 2,
+          left: 0,
+          behavior: 'smooth',
+        });
+
         showHtmlObject(loadMoreButton);
       }
     })

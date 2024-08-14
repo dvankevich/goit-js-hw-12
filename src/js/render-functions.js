@@ -75,7 +75,7 @@ export function showHtmlObject(htmlObject) {
 }
 
 /**
- * remove class visually-hidden to Object
+ * remove class visually-hidden from Object
  * @param {Object} htmlObject DOM Object to hide
  */
 export function hideHtmlObject(htmlObject) {
