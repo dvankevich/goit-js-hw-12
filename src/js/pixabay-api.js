@@ -2,7 +2,6 @@ import { getApiKey } from './crypto';
 import axios from 'axios';
 
 /**
- *
  * @param {string} searchTerm
  * @param {Number} page number. default: 1.
  * @returns JSON object

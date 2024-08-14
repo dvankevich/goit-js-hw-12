@@ -38,7 +38,6 @@ function getItemMarkdown(item) {
 }
 
 /**
- *
  * @param {Array} images array
  * @returns HTML markdown for gallery
  */
@@ -47,11 +46,10 @@ export function getGalleryMarkdown(images) {
 }
 
 /**
- *
  * @param {Object} gallery gallery DOM object
  * @param {String} markdown HTML markdown for gallery
  * @param {String} mode:
- * full - replace with InnerHTML
+ * full (default) - replace with InnerHTML
  * beforebegin, afterbegin, beforeend, afterend - insert with insertAdjacentHTML
  */
 export function drawGallery(gallery, markdown, mode = 'full') {
