@@ -1,7 +1,7 @@
 ## Functions
 
 <dl>
-<dt><a href="#getImagesAxios">getImagesAxios(searchTerm, page)</a> ⇒</dt>
+<dt><a href="#getImagesAxios">getImagesAxios(searchTerm, page, itemsPerPage)</a> ⇒</dt>
 <dd></dd>
 <dt><a href="#getGalleryMarkdown">getGalleryMarkdown(images)</a> ⇒</dt>
 <dd></dd>
@@ -17,7 +17,7 @@
 
 <a name="getImagesAxios"></a>
 
-## getImagesAxios(searchTerm, page) ⇒
+## getImagesAxios(searchTerm, page, itemsPerPage) ⇒
 **Kind**: global function  
 **Returns**: JSON object  
 
@@ -25,6 +25,7 @@
 | --- | --- | --- |
 | searchTerm | <code>string</code> |  |
 | page | <code>Number</code> | number. default: 1. |
+| itemsPerPage | <code>Number</code> | number. default: 15. |
 
 <a name="getGalleryMarkdown"></a>
 

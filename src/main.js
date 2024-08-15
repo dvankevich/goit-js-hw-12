@@ -53,6 +53,8 @@ const secondaryLoadMessage = document.querySelector('.secondary-load-message');
 
 let page = 1;
 let searchTermGlobal = '';
+let perPage = 15; // items per page
+let totalHits = 0;
 
 searchButton.addEventListener('click', searchButtonHandler);
 
@@ -79,9 +81,11 @@ function searchButtonHandler(event) {
   searchTermGlobal = searchTerm; // save searchTerm in global variable;
   page = 1;
 
-  getImagesAxios(searchTerm, page)
+  getImagesAxios(searchTerm, page, perPage)
     .then(images => {
       //console.log(images);
+      //console.log(images.totalHits);
+      totalHits = images.totalHits;
       if (images.hits.length === 0) {
         iziToast.error({
           ...iziError,
@@ -99,7 +103,11 @@ function searchButtonHandler(event) {
 
         simpleLightBox.refresh();
         // drawGallery(myGallery, loadMessageMarkdown, 'afterend'); // for test
-        showHtmlObject(loadMoreButton);
+        if (totalHits > page * perPage) {
+          showHtmlObject(loadMoreButton);
+        } else {
+          hideHtmlObject(loadMoreButton);
+        }
       }
     })
     .catch(error => {
@@ -115,11 +123,17 @@ function loadMoreButtonHandler(event) {
   let galleryMarkdown = '';
   let images = '';
   showHtmlObject(secondaryLoadMessage);
-  hideHtmlObject(loadMoreButton);
+  if (totalHits > page * perPage) {
+    showHtmlObject(loadMoreButton);
+  } else {
+    hideHtmlObject(loadMoreButton);
+  }
 
-  getImagesAxios(searchTermGlobal, page) // використовуємо глобальний searchTerm
+  getImagesAxios(searchTermGlobal, page, perPage) // використовуємо глобальний searchTerm
     .then(images => {
       // console.log(images);
+      //console.log(images.totalHits);
+      totalHits = images.totalHits;
       if (images.hits.length === 0) {
         // тут вже не перша сторінка і якщо результат пошуку пустий то більше зображень нема
         iziToast.error({
@@ -144,7 +158,13 @@ function loadMoreButtonHandler(event) {
           behavior: 'smooth',
         });
 
-        showHtmlObject(loadMoreButton);
+        //console.log(totalHits > page * perPage, totalHits, page, perPage);
+
+        if (totalHits > page * perPage) {
+          showHtmlObject(loadMoreButton);
+        } else {
+          hideHtmlObject(loadMoreButton);
+        }
       }
     })
     .catch(error => {
