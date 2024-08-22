@@ -49,6 +49,7 @@ const simpleLightBox = new SimpleLightbox('.gallery a', {
   overlayOpacity: 0.8,
 });
 const loadMoreButton = document.querySelector('.load-more-button');
+const loadMessage = document.querySelector('.load-message');
 const secondaryLoadMessage = document.querySelector('.secondary-load-message');
 
 let page = 1;
@@ -76,7 +77,8 @@ function searchButtonHandler(event) {
   }
 
   //console.log(`fetch data from backend with search term: ${searchTerm}`);
-  drawGallery(myGallery, loadMessageMarkdown);
+  showHtmlObject(loadMessage);
+  drawGallery(myGallery, ''); // clear gallery
 
   searchTermGlobal = searchTerm; // save searchTerm in global variable;
   page = 1;
@@ -99,6 +101,7 @@ function searchButtonHandler(event) {
 
         galleryMarkdown = getGalleryMarkdown(images.hits);
 
+        hideHtmlObject(loadMessage);
         drawGallery(myGallery, galleryMarkdown);
 
         simpleLightBox.refresh();
@@ -122,7 +125,11 @@ function loadMoreButtonHandler(event) {
   page += 1;
   let galleryMarkdown = '';
   let images = '';
+
+  const time = Date.now();
+  console.log('--- show load message ---');
   showHtmlObject(secondaryLoadMessage);
+
   if (totalHits > page * perPage) {
     showHtmlObject(loadMoreButton);
   } else {
@@ -170,6 +177,10 @@ function loadMoreButtonHandler(event) {
     .catch(error => {
       console.error('сталося щось дивне', error);
     });
+  // 2 mentor
+  // load message у мене на комп'ютері відображається 7 - 10 ms
+  // тому його не видно. хіба спеціально робити затримку.
+  console.log(Date.now() - time, '--- hide load message ---');
   hideHtmlObject(secondaryLoadMessage);
 }
 

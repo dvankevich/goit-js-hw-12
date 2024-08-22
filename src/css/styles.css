@@ -27,7 +27,7 @@ p {
   overflow: hidden;
 }
 
-footer {
+.wrapper {
   display: flex;
   justify-content: center;
   margin-top: 32px;
