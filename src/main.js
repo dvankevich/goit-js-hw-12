@@ -38,8 +38,6 @@ const iziWarning = {
   iconUrl: 'caution-icon.svg',
 };
 
-const loadMessageMarkdown =
-  '<li class="load-message">Loading images, please wait...</li>';
 const myGallery = document.querySelector('.gallery');
 const searchButton = document.querySelector('.search-button');
 const searchInput = document.querySelector('.search-input');
@@ -66,19 +64,21 @@ function searchButtonHandler(event) {
   let galleryMarkdown = '';
   let images = '';
 
-  if (!searchTerm || searchTerm.length < 3) {
+  if (!searchTerm || searchTerm.length < 2) {
     iziToast.warning({
       ...iziWarning,
-      message: 'Enter data for search, please. Min. 3 symbols.',
+      message: 'Enter data for search, please. Min. 2 symbols.',
     });
     searchInput.value = ''; // clear input
     drawGallery(myGallery, ''); // clear gallery
+    hideHtmlObject(loadMoreButton);
     return;
   }
 
   //console.log(`fetch data from backend with search term: ${searchTerm}`);
   showHtmlObject(loadMessage);
   drawGallery(myGallery, ''); // clear gallery
+  hideHtmlObject(loadMoreButton);
 
   searchTermGlobal = searchTerm; // save searchTerm in global variable;
   page = 1;
@@ -95,6 +95,7 @@ function searchButtonHandler(event) {
             'Sorry, there are no images matching<br> your search query. Please, try again!',
         });
         searchInput.value = ''; // clear input
+        hideHtmlObject(loadMessage);
         drawGallery(myGallery, ''); // clear gallery
       } else {
         searchInput.value = ''; // clear input
@@ -109,6 +110,13 @@ function searchButtonHandler(event) {
         if (totalHits > page * perPage) {
           showHtmlObject(loadMoreButton);
         } else {
+          iziToast.warning({
+            ...iziWarning,
+            message:
+              "We're sorry, but you've reached<br>the end of search results.",
+          });
+          console.log('message in line 118');
+
           hideHtmlObject(loadMoreButton);
         }
       }
@@ -133,6 +141,12 @@ function loadMoreButtonHandler(event) {
   if (totalHits > page * perPage) {
     showHtmlObject(loadMoreButton);
   } else {
+    iziToast.warning({
+      ...iziWarning,
+      message: "We're sorry, but you've reached<br>the end of search results.",
+    });
+    console.log('message in line 146');
+
     hideHtmlObject(loadMoreButton);
   }
 
@@ -148,6 +162,7 @@ function loadMoreButtonHandler(event) {
           message:
             "We're sorry, but you've reached<br>the end of search results.",
         });
+        console.log('message in line 163');
       } else {
         galleryMarkdown = getGalleryMarkdown(images.hits);
 
@@ -170,6 +185,13 @@ function loadMoreButtonHandler(event) {
         if (totalHits > page * perPage) {
           showHtmlObject(loadMoreButton);
         } else {
+          iziToast.warning({
+            ...iziWarning,
+            message:
+              "We're sorry, but you've reached<br>the end of search results.",
+          });
+          console.log('message in line 191');
+
           hideHtmlObject(loadMoreButton);
         }
       }
