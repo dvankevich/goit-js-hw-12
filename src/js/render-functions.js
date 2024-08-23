@@ -23,7 +23,6 @@ const iziError = {
 
 const iziWarning = {
   ...iziCommon,
-  title: 'Warning',
   color: '#ffa000',
   iconUrl: 'caution-icon.svg',
 };

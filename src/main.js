@@ -91,12 +91,7 @@ async function loadMoreButtonHandler(event) {
   let images = '';
 
   showHtmlObject(secondaryLoadMessage);
-
-  if (totalHits > page * perPage) {
-    showHtmlObject(loadMoreButton);
-  } else {
-    hideHtmlObject(loadMoreButton);
-  }
+  hideHtmlObject(loadMoreButton);
 
   images = await getImagesAxios(searchTermGlobal, page, perPage); // використовуємо глобальний searchTerm
 
