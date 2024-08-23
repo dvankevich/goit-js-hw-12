@@ -56,6 +56,7 @@ let perPage = 15; // items per page
 let totalHits = 0;
 
 searchButton.addEventListener('click', searchButtonHandler);
+loadMoreButton.addEventListener('click', loadMoreButtonHandler);
 
 async function searchButtonHandler(event) {
   event.preventDefault();
@@ -75,7 +76,6 @@ async function searchButtonHandler(event) {
     return;
   }
 
-  //console.log(`fetch data from backend with search term: ${searchTerm}`);
   showHtmlObject(loadMessage);
   drawGallery(myGallery, ''); // clear gallery
   hideHtmlObject(loadMoreButton);
@@ -85,8 +85,6 @@ async function searchButtonHandler(event) {
 
   images = await getImagesAxios(searchTerm, page, perPage);
 
-  //console.log(images);
-  //console.log(images.totalHits);
   totalHits = images.totalHits;
   if (images.hits.length === 0) {
     iziToast.error({
@@ -106,7 +104,7 @@ async function searchButtonHandler(event) {
     drawGallery(myGallery, galleryMarkdown);
 
     simpleLightBox.refresh();
-    // drawGallery(myGallery, loadMessageMarkdown, 'afterend'); // for test
+
     if (totalHits > page * perPage) {
       showHtmlObject(loadMoreButton);
     } else {
@@ -115,14 +113,10 @@ async function searchButtonHandler(event) {
         message:
           "We're sorry, but you've reached<br>the end of search results.",
       });
-      console.log('message in line 118');
-
       hideHtmlObject(loadMoreButton);
     }
   }
 }
-
-loadMoreButton.addEventListener('click', loadMoreButtonHandler);
 
 async function loadMoreButtonHandler(event) {
   event.preventDefault();
@@ -130,26 +124,16 @@ async function loadMoreButtonHandler(event) {
   let galleryMarkdown = '';
   let images = '';
 
-  const time = Date.now();
-  console.log('--- show load message ---');
   showHtmlObject(secondaryLoadMessage);
 
   if (totalHits > page * perPage) {
     showHtmlObject(loadMoreButton);
   } else {
-    // iziToast.warning({
-    //   ...iziWarning,
-    //   message: "We're sorry, but you've reached<br>the end of search results.",
-    // });
-    console.log('message in line 146');
-
     hideHtmlObject(loadMoreButton);
   }
 
   images = await getImagesAxios(searchTermGlobal, page, perPage); // використовуємо глобальний searchTerm
 
-  // console.log(images);
-  //console.log(images.totalHits);
   totalHits = images.totalHits;
   if (images.hits.length === 0) {
     // тут вже не перша сторінка і якщо результат пошуку пустий то більше зображень нема
@@ -157,25 +141,17 @@ async function loadMoreButtonHandler(event) {
       ...iziError,
       message: "We're sorry, but you've reached<br>the end of search results.",
     });
-    console.log('message in line 163');
   } else {
     galleryMarkdown = getGalleryMarkdown(images.hits);
-
     drawGallery(myGallery, galleryMarkdown, 'beforeend'); // додаємо зображення на екран
-
     simpleLightBox.refresh();
-
     // scroll
     const galleryItem = document.querySelector('.gallery-item');
-    //console.log(galleryItem.getBoundingClientRect().height);
-    //window.scrollBy(0, galleryItem.getBoundingClientRect().height * 2);
     window.scrollBy({
       top: galleryItem.getBoundingClientRect().height * 2,
       left: 0,
       behavior: 'smooth',
     });
-
-    //console.log(totalHits > page * perPage, totalHits, page, perPage);
 
     if (totalHits > page * perPage) {
       showHtmlObject(loadMoreButton);
@@ -185,16 +161,9 @@ async function loadMoreButtonHandler(event) {
         message:
           "We're sorry, but you've reached<br>the end of search results.",
       });
-      console.log('message in line 191');
-
       hideHtmlObject(loadMoreButton);
     }
   }
-
-  // 2 mentor
-  // load message у мене на комп'ютері відображається 7 - 10 ms
-  // тому його не видно. хіба спеціально робити затримку.
-  console.log(Date.now() - time, '--- hide load message ---');
   hideHtmlObject(secondaryLoadMessage);
 }
 
