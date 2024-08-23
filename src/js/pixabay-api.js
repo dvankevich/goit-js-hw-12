@@ -22,8 +22,6 @@ export async function getImagesAxios(searchTerm, page = 1, itemsPerPage = 15) {
         page: page,
       },
     });
-    //console.log(response);
-
     return response.data;
   } catch (error) {
     console.error('Error fetching photos:', error);

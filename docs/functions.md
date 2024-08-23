@@ -3,6 +3,12 @@
 <dl>
 <dt><a href="#getImagesAxios">getImagesAxios(searchTerm, page, itemsPerPage)</a> ⇒</dt>
 <dd></dd>
+<dt><a href="#messageWarning">messageWarning(message)</a></dt>
+<dd><p>show warning message</p>
+</dd>
+<dt><a href="#messageError">messageError(message)</a></dt>
+<dd><p>show error message</p>
+</dd>
 <dt><a href="#getGalleryMarkdown">getGalleryMarkdown(images)</a> ⇒</dt>
 <dd></dd>
 <dt><a href="#drawGallery">drawGallery(gallery, markdown, mode:)</a></dt>
@@ -26,6 +32,28 @@
 | searchTerm | <code>string</code> |  |
 | page | <code>Number</code> | number. default: 1. |
 | itemsPerPage | <code>Number</code> | number. default: 15. |
+
+<a name="messageWarning"></a>
+
+## messageWarning(message)
+show warning message
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| message | <code>string</code> | 
+
+<a name="messageError"></a>
+
+## messageError(message)
+show error message
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| message | <code>string</code> | 
 
 <a name="getGalleryMarkdown"></a>
 

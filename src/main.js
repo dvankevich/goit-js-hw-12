@@ -4,39 +4,12 @@ import {
   drawGallery,
   showHtmlObject,
   hideHtmlObject,
+  messageWarning,
+  messageError,
 } from './js/render-functions';
 import SimpleLightbox from 'simplelightbox';
 // Додатковий імпорт стилів
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import iziToast from 'izitoast';
-// Додатковий імпорт стилів
-import 'izitoast/dist/css/iziToast.min.css';
-
-const iziCommon = {
-  message: 'Common message',
-  theme: 'dark',
-  position: 'topRight',
-  titleColor: '#fff',
-  titleSize: '16px',
-  titleLineHeight: '1.5',
-  messageColor: '#fff',
-  messageSize: '16px',
-  messageLineHeight: '1.5',
-  imageWidth: 24,
-};
-
-const iziError = {
-  ...iziCommon,
-  color: '#ef4040',
-  iconUrl: 'error-icon.svg', // зображення має бути у папці public
-};
-
-const iziWarning = {
-  ...iziCommon,
-  title: 'Warning',
-  color: '#ffa000',
-  iconUrl: 'caution-icon.svg',
-};
 
 const myGallery = document.querySelector('.gallery');
 const searchButton = document.querySelector('.search-button');
@@ -66,10 +39,7 @@ async function searchButtonHandler(event) {
   let images = '';
 
   if (!searchTerm || searchTerm.length < 2) {
-    iziToast.warning({
-      ...iziWarning,
-      message: 'Enter data for search, please. Min. 2 symbols.',
-    });
+    messageWarning('Enter data for search, please. Min. 2 symbols.');
     searchInput.value = ''; // clear input
     drawGallery(myGallery, ''); // clear gallery
     hideHtmlObject(loadMoreButton);
@@ -87,11 +57,9 @@ async function searchButtonHandler(event) {
 
   totalHits = images.totalHits;
   if (images.hits.length === 0) {
-    iziToast.error({
-      ...iziError,
-      message:
-        'Sorry, there are no images matching<br> your search query. Please, try again!',
-    });
+    messageError(
+      'Sorry, there are no images matching<br> your search query. Please, try again!'
+    );
     searchInput.value = ''; // clear input
     hideHtmlObject(loadMessage);
     drawGallery(myGallery, ''); // clear gallery
@@ -108,11 +76,9 @@ async function searchButtonHandler(event) {
     if (totalHits > page * perPage) {
       showHtmlObject(loadMoreButton);
     } else {
-      iziToast.warning({
-        ...iziWarning,
-        message:
-          "We're sorry, but you've reached<br>the end of search results.",
-      });
+      messageWarning(
+        "We're sorry, but you've reached<br>the end of search results."
+      );
       hideHtmlObject(loadMoreButton);
     }
   }
@@ -137,10 +103,9 @@ async function loadMoreButtonHandler(event) {
   totalHits = images.totalHits;
   if (images.hits.length === 0) {
     // тут вже не перша сторінка і якщо результат пошуку пустий то більше зображень нема
-    iziToast.error({
-      ...iziError,
-      message: "We're sorry, but you've reached<br>the end of search results.",
-    });
+    messageError(
+      "We're sorry, but you've reached<br>the end of search results."
+    );
   } else {
     galleryMarkdown = getGalleryMarkdown(images.hits);
     drawGallery(myGallery, galleryMarkdown, 'beforeend'); // додаємо зображення на екран
@@ -156,11 +121,9 @@ async function loadMoreButtonHandler(event) {
     if (totalHits > page * perPage) {
       showHtmlObject(loadMoreButton);
     } else {
-      iziToast.warning({
-        ...iziWarning,
-        message:
-          "We're sorry, but you've reached<br>the end of search results.",
-      });
+      messageWarning(
+        "We're sorry, but you've reached<br>the end of search results."
+      );
       hideHtmlObject(loadMoreButton);
     }
   }

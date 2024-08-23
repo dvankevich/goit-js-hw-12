@@ -1,3 +1,55 @@
+import iziToast from 'izitoast';
+// Додатковий імпорт стилів
+import 'izitoast/dist/css/iziToast.min.css';
+
+const iziCommon = {
+  message: 'Common message',
+  theme: 'dark',
+  position: 'topRight',
+  titleColor: '#fff',
+  titleSize: '16px',
+  titleLineHeight: '1.5',
+  messageColor: '#fff',
+  messageSize: '16px',
+  messageLineHeight: '1.5',
+  imageWidth: 24,
+};
+
+const iziError = {
+  ...iziCommon,
+  color: '#ef4040',
+  iconUrl: 'error-icon.svg', // зображення має бути у папці public
+};
+
+const iziWarning = {
+  ...iziCommon,
+  title: 'Warning',
+  color: '#ffa000',
+  iconUrl: 'caution-icon.svg',
+};
+
+/**
+ * show warning message
+ * @param {string} message
+ */
+export function messageWarning(message) {
+  iziToast.warning({
+    ...iziWarning,
+    message: message,
+  });
+}
+
+/**
+ * show error message
+ * @param {string} message
+ */
+export function messageError(message) {
+  iziToast.error({
+    ...iziError,
+    message: message,
+  });
+}
+
 function getItemMarkdown(item) {
   // webformatURL — посилання на маленьке зображення для списку карток у галереї
   // largeImageURL — посилання на велике зображення для модального вікна
