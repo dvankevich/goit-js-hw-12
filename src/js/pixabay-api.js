@@ -1,6 +1,8 @@
 import { getApiKey } from './crypto';
 import axios from 'axios';
 
+axios.defaults.baseURL = 'https://pixabay.com/api';
+
 /**
  * @param {string} searchTerm
  * @param {Number} page number. default: 1.
@@ -9,7 +11,7 @@ import axios from 'axios';
  */
 export async function getImagesAxios(searchTerm, page = 1, itemsPerPage = 15) {
   try {
-    const response = await axios.get('https://pixabay.com/api/', {
+    const response = await axios.get('/', {
       params: {
         key: getApiKey(),
         q: searchTerm,
