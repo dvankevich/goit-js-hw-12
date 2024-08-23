@@ -57,7 +57,7 @@ let totalHits = 0;
 
 searchButton.addEventListener('click', searchButtonHandler);
 
-function searchButtonHandler(event) {
+async function searchButtonHandler(event) {
   event.preventDefault();
   let searchTerm = String(searchInput.value.trim());
   searchTerm = searchTerm.replace(/[*]/g, ''); // видалення спецсимволів
@@ -83,52 +83,48 @@ function searchButtonHandler(event) {
   searchTermGlobal = searchTerm; // save searchTerm in global variable;
   page = 1;
 
-  getImagesAxios(searchTerm, page, perPage)
-    .then(images => {
-      //console.log(images);
-      //console.log(images.totalHits);
-      totalHits = images.totalHits;
-      if (images.hits.length === 0) {
-        iziToast.error({
-          ...iziError,
-          message:
-            'Sorry, there are no images matching<br> your search query. Please, try again!',
-        });
-        searchInput.value = ''; // clear input
-        hideHtmlObject(loadMessage);
-        drawGallery(myGallery, ''); // clear gallery
-      } else {
-        searchInput.value = ''; // clear input
+  images = await getImagesAxios(searchTerm, page, perPage);
 
-        galleryMarkdown = getGalleryMarkdown(images.hits);
-
-        hideHtmlObject(loadMessage);
-        drawGallery(myGallery, galleryMarkdown);
-
-        simpleLightBox.refresh();
-        // drawGallery(myGallery, loadMessageMarkdown, 'afterend'); // for test
-        if (totalHits > page * perPage) {
-          showHtmlObject(loadMoreButton);
-        } else {
-          iziToast.warning({
-            ...iziWarning,
-            message:
-              "We're sorry, but you've reached<br>the end of search results.",
-          });
-          console.log('message in line 118');
-
-          hideHtmlObject(loadMoreButton);
-        }
-      }
-    })
-    .catch(error => {
-      console.error('сталося щось дивне', error);
+  //console.log(images);
+  //console.log(images.totalHits);
+  totalHits = images.totalHits;
+  if (images.hits.length === 0) {
+    iziToast.error({
+      ...iziError,
+      message:
+        'Sorry, there are no images matching<br> your search query. Please, try again!',
     });
+    searchInput.value = ''; // clear input
+    hideHtmlObject(loadMessage);
+    drawGallery(myGallery, ''); // clear gallery
+  } else {
+    searchInput.value = ''; // clear input
+
+    galleryMarkdown = getGalleryMarkdown(images.hits);
+
+    hideHtmlObject(loadMessage);
+    drawGallery(myGallery, galleryMarkdown);
+
+    simpleLightBox.refresh();
+    // drawGallery(myGallery, loadMessageMarkdown, 'afterend'); // for test
+    if (totalHits > page * perPage) {
+      showHtmlObject(loadMoreButton);
+    } else {
+      iziToast.warning({
+        ...iziWarning,
+        message:
+          "We're sorry, but you've reached<br>the end of search results.",
+      });
+      console.log('message in line 118');
+
+      hideHtmlObject(loadMoreButton);
+    }
+  }
 }
 
 loadMoreButton.addEventListener('click', loadMoreButtonHandler);
 
-function loadMoreButtonHandler(event) {
+async function loadMoreButtonHandler(event) {
   event.preventDefault();
   page += 1;
   let galleryMarkdown = '';
@@ -141,64 +137,60 @@ function loadMoreButtonHandler(event) {
   if (totalHits > page * perPage) {
     showHtmlObject(loadMoreButton);
   } else {
-    iziToast.warning({
-      ...iziWarning,
-      message: "We're sorry, but you've reached<br>the end of search results.",
-    });
+    // iziToast.warning({
+    //   ...iziWarning,
+    //   message: "We're sorry, but you've reached<br>the end of search results.",
+    // });
     console.log('message in line 146');
 
     hideHtmlObject(loadMoreButton);
   }
 
-  getImagesAxios(searchTermGlobal, page, perPage) // використовуємо глобальний searchTerm
-    .then(images => {
-      // console.log(images);
-      //console.log(images.totalHits);
-      totalHits = images.totalHits;
-      if (images.hits.length === 0) {
-        // тут вже не перша сторінка і якщо результат пошуку пустий то більше зображень нема
-        iziToast.error({
-          ...iziError,
-          message:
-            "We're sorry, but you've reached<br>the end of search results.",
-        });
-        console.log('message in line 163');
-      } else {
-        galleryMarkdown = getGalleryMarkdown(images.hits);
+  images = await getImagesAxios(searchTermGlobal, page, perPage); // використовуємо глобальний searchTerm
 
-        drawGallery(myGallery, galleryMarkdown, 'beforeend'); // додаємо зображення на екран
-
-        simpleLightBox.refresh();
-
-        // scroll
-        const galleryItem = document.querySelector('.gallery-item');
-        //console.log(galleryItem.getBoundingClientRect().height);
-        //window.scrollBy(0, galleryItem.getBoundingClientRect().height * 2);
-        window.scrollBy({
-          top: galleryItem.getBoundingClientRect().height * 2,
-          left: 0,
-          behavior: 'smooth',
-        });
-
-        //console.log(totalHits > page * perPage, totalHits, page, perPage);
-
-        if (totalHits > page * perPage) {
-          showHtmlObject(loadMoreButton);
-        } else {
-          iziToast.warning({
-            ...iziWarning,
-            message:
-              "We're sorry, but you've reached<br>the end of search results.",
-          });
-          console.log('message in line 191');
-
-          hideHtmlObject(loadMoreButton);
-        }
-      }
-    })
-    .catch(error => {
-      console.error('сталося щось дивне', error);
+  // console.log(images);
+  //console.log(images.totalHits);
+  totalHits = images.totalHits;
+  if (images.hits.length === 0) {
+    // тут вже не перша сторінка і якщо результат пошуку пустий то більше зображень нема
+    iziToast.error({
+      ...iziError,
+      message: "We're sorry, but you've reached<br>the end of search results.",
     });
+    console.log('message in line 163');
+  } else {
+    galleryMarkdown = getGalleryMarkdown(images.hits);
+
+    drawGallery(myGallery, galleryMarkdown, 'beforeend'); // додаємо зображення на екран
+
+    simpleLightBox.refresh();
+
+    // scroll
+    const galleryItem = document.querySelector('.gallery-item');
+    //console.log(galleryItem.getBoundingClientRect().height);
+    //window.scrollBy(0, galleryItem.getBoundingClientRect().height * 2);
+    window.scrollBy({
+      top: galleryItem.getBoundingClientRect().height * 2,
+      left: 0,
+      behavior: 'smooth',
+    });
+
+    //console.log(totalHits > page * perPage, totalHits, page, perPage);
+
+    if (totalHits > page * perPage) {
+      showHtmlObject(loadMoreButton);
+    } else {
+      iziToast.warning({
+        ...iziWarning,
+        message:
+          "We're sorry, but you've reached<br>the end of search results.",
+      });
+      console.log('message in line 191');
+
+      hideHtmlObject(loadMoreButton);
+    }
+  }
+
   // 2 mentor
   // load message у мене на комп'ютері відображається 7 - 10 ms
   // тому його не видно. хіба спеціально робити затримку.
